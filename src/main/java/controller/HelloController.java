@@ -3,10 +3,7 @@ package controller;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,6 +23,17 @@ public class HelloController {
         return "hello"+name;
     }
 
+//    @ExceptionHandler
+//    void illegalArgumentExceptionHandler(IllegalArgumentException e,HttpServletResponse response) throws IOException{
+//        response.sendError(HttpStatus.BAD_REQUEST.value());
+//    }
+
+    //Using Generic Handling
+
+    @ExceptionHandler({IllegalArgumentException.class,NullPointerException.class})
+    void handleBadRequests(HttpServletResponse response) throws IOException{
+        response.sendError(HttpStatus.BAD_REQUEST.value());
+    }
 
 
 
